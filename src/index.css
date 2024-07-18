@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins&family=Rubik+Dirt&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins&display=swap"); */
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap'); */
+
+* {
+  font-family: "Poppins" !important;
+  /* font-family: "Quicksand", sans-serif !important; */
+  /* font-weight: 700 !important; */
+}
+
+body {
+  overflow: hidden;
+  font-family: "Poppins", sans-serif !important;
+  /* font-family: "Quicksand", sans-serif !important; */
+  font-size: 13px;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-weight: 400;
+}
+
+.removeScrollBar::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px;
+  border-radius: 100%;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.removeScrollBar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+#tabs>.ant-tabs-content-holder {
+  height: calc(100vh - 257px);
+  overflow: scroll;
+}
+
+.ant-tabs-content-holder {
+  height: calc(100vh - 207px);
+  overflow: scroll;
+}
+
+.ant-message-custom-content>span {
+  font-size: 12px;
+}
+
+.react-dropdown-select {
+  border-radius: 6px !important;
+}
+
+.react-dropdown-select:hover {
+  border-color: lightgray !important;
+}
+
+.react-dropdown-select:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-color: lightgray !important;
+}
+
+.react-dropdown-select:focus-within {
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-color: lightgray !important;
+}
+
+.react-dropdown-select-dropdown {
+  border-radius: 6px !important;
+}
+
+.searchAutoComplete {
+  width: 250px !important;
+}
+
+@media screen and (max-width: 540px) {
+  #tabs>.ant-tabs-content-holder {
+    height: calc(100vh - 280px);
+    overflow: scroll;
+  }
+}
+
+.ant-tooltip-inner {
+  font-size: 10 px !important;
+}
