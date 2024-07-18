@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import arrow_right from "../../assets/navbar/arrow_right.svg";
 import arrow_left from "../../assets/navbar/arrow_left.svg";
 import logout from "../../assets/navbar/logout.svg";
 
-import { FaBlogger, FaCalendarAlt, FaMicrophone, FaQuoteLeft, FaUser } from 'react-icons/fa';
+import { FaBlogger, FaCalendarAlt, FaMicrophone, FaQuoteLeft } from 'react-icons/fa';
 
 export default function Navbar({ isOpen, setIsOpen, handleLogout, children }) {
 
@@ -17,7 +17,7 @@ export default function Navbar({ isOpen, setIsOpen, handleLogout, children }) {
     return pathCase.includes(linkCase);
   };
 
-  const [userDetail, setUserDetail] = useState({ name: "Admin", email: "admin@example.com" })
+  const userDetail = { name: "Admin", email: "admin@connectmurali.com" };
 
   const scrollBarCSS = `
         #scrollableNav::-webkit-scrollbar {
@@ -70,13 +70,6 @@ export default function Navbar({ isOpen, setIsOpen, handleLogout, children }) {
       link: '/testimonials',
       activeLink: '/testimonials'
     },
-    {
-      icon: <FaUser />,
-      alt: 'User Management',
-      title: 'User Management',
-      link: '/users',
-      activeLink: '/users'
-    }
   ];
 
   useEffect(() => {

@@ -14,7 +14,6 @@ export default function Input({
     mandate,
     disabled,
     invisible,
-    amount,
     upppercase = false,
     ...other
 }) {
@@ -42,46 +41,19 @@ export default function Input({
                 </label>
             </div>
             <div>
-                {amount ?
-                    (
-                        <div className="relative">
-                            <input
-                                type={type}
-                                name={label}
-                                id={label}
-                                className={` ${disabled && "bg-[#eee]"} border ${!value && error ? "border-[#F04438]" : "border-border-gray"} ${value === "" ? "text-sm" : "text-base"} text-text-black placeholder-placeholder-gray outline-none rounded-lg pb-[1px] pl-8 h-[40px] focus:border-[#1849A9] ${upppercase && "uppercase"} ${upppercase && "placeholder:lowercase"}`}
-                                style={{
-                                    width: inputStyle.width,
-                                    fontSize: "12px"
-                                }}
-                                placeholder={placeholder}
-                                value={value}
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                disabled={disabled}
-                                {...other}
-                            />
-                            <p className="absolute top-[1px] bg-gray-200 h-[38px] left-[1px] rounded-tl-lg rounded-bl-lg px-2 pt-[0.49rem] font-semibold">₹</p>
-                        </div>
-                    )
-                    :
-                    <input
-                        type={type}
-                        name={label}
-                        id={label}
-                        className={` ${disabled && "bg-[#eee]"} border ${!value && error ? "border-[#F04438]" : "border-border-gray"} ${value === "" ? "text-sm" : "text-base"} text-text-black placeholder-placeholder-gray outline-none rounded-lg pb-[1px] pl-2 h-[40px] focus:border-[#1849A9] ${upppercase && "uppercase"} ${upppercase && "placeholder:lowercase"}`}
-                        style={{
-                            width: inputStyle.width,
-                            fontSize: "12px"
-                        }}
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        disabled={disabled}
-                        {...other}
-                    />
-                }
+                <input
+                    type={type}
+                    name={label}
+                    id={label}
+                    className={` ${disabled && "bg-[#eee]"} border ${!value && error ? "border-[#F04438]" : "border-border-gray"} ${value === "" ? "text-sm" : "text-base"} text-text-black placeholder-placeholder-gray outline-none rounded-lg pb-[1px] pl-2 h-[40px] focus:border-primary-blue ${upppercase && "uppercase"} ${upppercase && "placeholder:lowercase"}`}
+                    style={{ width: inputStyle.width, fontSize: "12px" }}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    disabled={disabled}
+                    {...other}
+                />
                 {!value && error && (
                     <ErrorMessage>
                         {error}

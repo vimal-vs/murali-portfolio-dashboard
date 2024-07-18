@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Modal, message } from "antd";
 import Table from "../../components/reusable/Table/Table";
 import TableHead from "../../components/reusable/Table/TableHead";
 import TableCell from "../../components/reusable/Table/TableCell";
-import Input from "../../components/reusable/Input";
-import PodcastServices from "../../services/Podcast";
+import TestimonialServices from "../../services/Testimonial";
 import { Delete, Edit } from "@mui/icons-material";
-import PodcastForm from "../../components/forms/PodcastForm";
+import TestimonialForm from "../../components/forms/TestimonialsForm";
+import Input from "../reusable/Input";
 
-export default function PodcastsTable({
+export default function TestimonialsTable({
     page,
     handleChangePage,
     handleChangeRowsPerPage,
     rowsPerPage,
     rowCount,
     data: initialData,
-    fetchPodcasts
+    fetchTestimonials // Function to fetch testimonials
 }) {
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,31 +46,31 @@ export default function PodcastsTable({
 
     const handleDelete = async () => {
         try {
-            const response = await PodcastServices.deleteById(selectedRow?.id);
+            const response = await TestimonialServices.deleteById(selectedRow?.id);
             if (response.status === 204) {
-                message.success("Podcast deleted successfully");
-                fetchPodcasts();
+                message.success("Testimonial deleted successfully");
+                fetchTestimonials();
                 setIsDeleteModalOpen(false);
             } else {
-                message.error(response.data.message || "Failed to delete podcast");
+                message.error(response.data.message || "Failed to delete testimonial");
             }
         } catch (error) {
-            message.error(error.message || "Failed to delete podcast");
+            message.error(error.message || "Failed to delete testimonial");
         }
     };
 
-    const handleEdit = async (podcastDetails) => {
+    const handleEdit = async (testimonialDetails) => {
         try {
-            const response = await PodcastServices.updateById(selectedRow.id, podcastDetails);
+            const response = await TestimonialServices.updateById(selectedRow.id, testimonialDetails);
             if (response.status === 200) {
-                message.success("Podcast updated successfully");
+                message.success("Testimonial updated successfully");
                 handleCancel();
-                fetchPodcasts();
+                fetchTestimonials();
             } else {
-                message.error(response.data.message || "Failed to update podcast");
+                message.error(response.data.message || "Failed to update testimonial");
             }
         } catch (error) {
-            message.error(error.message || "Failed to update podcast");
+            message.error(error.message || "Failed to update testimonial");
         }
     };
 
@@ -81,9 +80,9 @@ export default function PodcastsTable({
         } else {
             const lowercasedFilter = search.toLowerCase();
             const filtered = initialData.filter(item =>
-                item.title.toLowerCase().includes(lowercasedFilter) ||
-                item.description.toLowerCase().includes(lowercasedFilter) ||
-                item.url.toLowerCase().includes(lowercasedFilter)
+                item.content.toLowerCase().includes(lowercasedFilter) ||
+                item.name.toLowerCase().includes(lowercasedFilter) ||
+                item.designation.toLowerCase().includes(lowercasedFilter)
             );
             setFilteredData(filtered);
         }
@@ -91,39 +90,26 @@ export default function PodcastsTable({
 
     const columns = [
         {
-            id: "podcastID",
-            name: <TableHead>Podcast ID</TableHead>,
+            id: "testimonialID",
+            name: <TableHead>Testimonial ID</TableHead>,
             cell: (row) => (
-                <TableCell>
-                    <Link
-                        className=" text-primary-blue"
-                        to={`/podcast-management/${row.id}?id=${row.id}`}
-                    >
-                        {row.id}
-                    </Link>
-                </TableCell>
+                <TableCell>{row.id}</TableCell>
             ),
         },
         {
-            id: "title",
-            name: <TableHead>Title</TableHead>,
-            cell: (row) => <TableCell>{row.title}</TableCell>,
+            id: "content",
+            name: <TableHead>Content</TableHead>,
+            cell: (row) => <TableCell>{row.content}</TableCell>,
         },
         {
-            id: "description",
-            name: <TableHead>Description</TableHead>,
-            cell: (row) => <TableCell>{row.description}</TableCell>,
+            id: "name",
+            name: <TableHead>Name</TableHead>,
+            cell: (row) => <TableCell>{row.name}</TableCell>,
         },
         {
-            id: "url",
-            name: <TableHead>URL</TableHead>,
-            cell: (row) => (
-                <TableCell>
-                    <a href={row.url} target="_blank" rel="noopener noreferrer">
-                        {row.url}
-                    </a>
-                </TableCell>
-            ),
+            id: "designation",
+            name: <TableHead>Designation</TableHead>,
+            cell: (row) => <TableCell>{row.designation}</TableCell>,
         },
         {
             id: "createdAt",
@@ -154,7 +140,7 @@ export default function PodcastsTable({
                 <Input
                     label={"Search"}
                     type={"text"}
-                    placeholder={"title/description/url"}
+                    placeholder={"content/name/designation"}
                     value={search}
                     onChange={(e) => { setSearch(e.target.value); handleSearch(e.target.value); }}
                 />
@@ -169,7 +155,7 @@ export default function PodcastsTable({
                 rowCount={rowCount || 0}
             />
             <Modal
-                title={modalAction === "edit" ? "Edit Podcast" : ""}
+                title={modalAction === "edit" ? "Edit Testimonial" : ""}
                 visible={isModalOpen}
                 onCancel={handleCancel}
                 width={700}
@@ -177,8 +163,8 @@ export default function PodcastsTable({
                 footer={null}
             >
                 {modalAction === "edit" && (
-                    <PodcastForm
-                        podcast={selectedRow}
+                    <TestimonialForm
+                        testimonial={selectedRow}
                         onSubmit={handleEdit}
                         buttonText={"Submit"}
                     />
@@ -193,7 +179,7 @@ export default function PodcastsTable({
                 cancelText="Cancel"
                 okType="danger"
             >
-                <p>Are you sure you want to delete <span className="font-semibold">{selectedRow?.title}</span>?</p>
+                <p>Are you sure you want to delete <span className="font-semibold">{selectedRow?.name}</span>'s testimonial?</p>
             </Modal>
         </div>
     );

@@ -1,6 +1,6 @@
 import axiosInstance from './Axios';
 
-const createEvent = async (eventDetails) => {
+const create = async (eventDetails) => {
     try {
         const response = await axiosInstance.post('/events/create', eventDetails);
         return response;
@@ -9,7 +9,7 @@ const createEvent = async (eventDetails) => {
     }
 };
 
-const getAllEvents = async () => {
+const getAll = async () => {
     try {
         const response = await axiosInstance.get('/events/all');
         return response;
@@ -18,7 +18,7 @@ const getAllEvents = async () => {
     }
 };
 
-const getEventById = async (id) => {
+const getById = async (id) => {
     try {
         const response = await axiosInstance.get(`/events/get/${id}`);
         return response;
@@ -27,7 +27,7 @@ const getEventById = async (id) => {
     }
 };
 
-const updateEvent = async (id, eventDetails) => {
+const updateById = async (id, eventDetails) => {
     try {
         const response = await axiosInstance.put(`/events/update/${id}`, eventDetails);
         return response;
@@ -36,7 +36,7 @@ const updateEvent = async (id, eventDetails) => {
     }
 };
 
-const deleteEvent = async (id) => {
+const deleteById = async (id) => {
     try {
         const response = await axiosInstance.delete(`/events/delete/${id}`);
         return response;
@@ -46,11 +46,11 @@ const deleteEvent = async (id) => {
 };
 
 const EventService = {
-    createEvent,
-    getAllEvents,
-    getEventById,
-    updateEvent,
-    deleteEvent
+    create,
+    getAll,
+    getById,
+    updateById,
+    deleteById
 };
 
 export default EventService;

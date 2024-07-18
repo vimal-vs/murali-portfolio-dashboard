@@ -1,6 +1,6 @@
 import axiosInstance from './Axios';
 
-const createPodcast = async (podcastDetails) => {
+const create = async (podcastDetails) => {
     try {
         const response = await axiosInstance.post('/podcasts/create', podcastDetails);
         return response;
@@ -9,7 +9,7 @@ const createPodcast = async (podcastDetails) => {
     }
 };
 
-const getAllPodcasts = async () => {
+const getAll = async () => {
     try {
         const response = await axiosInstance.get('/podcasts/all');
         return response;
@@ -18,7 +18,7 @@ const getAllPodcasts = async () => {
     }
 };
 
-const getPodcastById = async (id) => {
+const getById = async (id) => {
     try {
         const response = await axiosInstance.get(`/podcasts/get/${id}`);
         return response;
@@ -27,7 +27,7 @@ const getPodcastById = async (id) => {
     }
 };
 
-const updatePodcast = async (id, podcastDetails) => {
+const updateById = async (id, podcastDetails) => {
     try {
         const response = await axiosInstance.put(`/podcasts/update/${id}`, podcastDetails);
         return response;
@@ -36,7 +36,7 @@ const updatePodcast = async (id, podcastDetails) => {
     }
 };
 
-const deletePodcast = async (id) => {
+const deleteById = async (id) => {
     try {
         const response = await axiosInstance.delete(`/podcasts/delete/${id}`);
         return response;
@@ -46,11 +46,11 @@ const deletePodcast = async (id) => {
 };
 
 const PodcastService = {
-    createPodcast,
-    getAllPodcasts,
-    getPodcastById,
-    updatePodcast,
-    deletePodcast
+    create,
+    getAll,
+    getById,
+    updateById,
+    deleteById
 };
 
 export default PodcastService;

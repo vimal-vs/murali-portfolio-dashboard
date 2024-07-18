@@ -1,6 +1,6 @@
 import axiosInstance from './Axios';
 
-const createTestimonial = async (testimonialDetails) => {
+const create = async (testimonialDetails) => {
     try {
         const response = await axiosInstance.post('/testimonials/create', testimonialDetails);
         return response;
@@ -9,7 +9,7 @@ const createTestimonial = async (testimonialDetails) => {
     }
 };
 
-const getAllTestimonials = async () => {
+const getAll = async () => {
     try {
         const response = await axiosInstance.get('/testimonials/all');
         return response;
@@ -18,7 +18,7 @@ const getAllTestimonials = async () => {
     }
 };
 
-const getTestimonialById = async (id) => {
+const getById = async (id) => {
     try {
         const response = await axiosInstance.get(`/testimonials/get/${id}`);
         return response;
@@ -27,7 +27,7 @@ const getTestimonialById = async (id) => {
     }
 };
 
-const updateTestimonial = async (id, testimonialDetails) => {
+const updateById = async (id, testimonialDetails) => {
     try {
         const response = await axiosInstance.put(`/testimonials/update/${id}`, testimonialDetails);
         return response;
@@ -36,7 +36,7 @@ const updateTestimonial = async (id, testimonialDetails) => {
     }
 };
 
-const deleteTestimonial = async (id) => {
+const deleteById = async (id) => {
     try {
         const response = await axiosInstance.delete(`/testimonials/delete/${id}`);
         return response;
@@ -46,11 +46,11 @@ const deleteTestimonial = async (id) => {
 };
 
 const TestimonialService = {
-    createTestimonial,
-    getAllTestimonials,
-    getTestimonialById,
-    updateTestimonial,
-    deleteTestimonial
+    create,
+    getAll,
+    getById,
+    updateById,
+    deleteById
 };
 
 export default TestimonialService;

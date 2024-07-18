@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, message } from "antd";
 import Table from "../reusable/Table/Table";
 import TableHead from "../reusable/Table/TableHead";
 import TableCell from "../reusable/Table/TableCell";
 import Input from "../reusable/Input";
-import Button from "../reusable/Button";
 import BlogServices from "../../services/Blog";
+import BlogForm from "../forms/BlogsForm";
+import { Delete, Edit } from "@mui/icons-material";
 
-export default function BlogTable({
-    activeKey,
+export default function BlogsTable({
     page,
     handleChangePage,
     handleChangeRowsPerPage,
@@ -22,9 +22,16 @@ export default function BlogTable({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalAction, setModalAction] = useState("");
     const [selectedRow, setSelectedRow] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data]);
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setSelectedRow(null);
     };
 
     const openModal = (action, row) => {
@@ -33,18 +40,52 @@ export default function BlogTable({
         setIsModalOpen(true);
     };
 
-    const handleDelete = async (id) => {
+    const openDeleteModal = (row) => {
+        setSelectedRow(row);
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleDelete = async () => {
         try {
-            const response = await BlogServices.delete(id);
+            const response = await BlogServices.deleteById(selectedRow.id);
             if (response.status === 200) {
                 message.success("Blog deleted successfully");
-                // Call fetchBlogs to refresh the table after deletion
                 fetchBlogs();
+                setIsDeleteModalOpen(false);
             } else {
                 message.error(response.data.message || "Failed to delete blog");
             }
         } catch (error) {
             message.error(error.message || "Failed to delete blog");
+        }
+    };
+
+    const handleEdit = async (blogDetails) => {
+        try {
+            const response = await BlogServices.updateById(selectedRow.id, blogDetails);
+            if (response.status === 200) {
+                message.success("Blog updated successfully");
+                handleCancel();
+                fetchBlogs();
+            } else {
+                message.error(response.data.message || "Failed to update blog");
+            }
+        } catch (error) {
+            message.error(error.message || "Failed to update blog");
+        }
+    };
+
+    const handleSearch = () => {
+        if (!search) {
+            setFilteredData(data);
+        } else {
+            const lowercasedFilter = search.toLowerCase();
+            const filtered = data.filter(item =>
+                item.title.toLowerCase().includes(lowercasedFilter) ||
+                item.author.toLowerCase().includes(lowercasedFilter) ||
+                item.category.toLowerCase().includes(lowercasedFilter)
+            );
+            setFilteredData(filtered);
         }
     };
 
@@ -54,10 +95,7 @@ export default function BlogTable({
             name: <TableHead>Blog ID</TableHead>,
             cell: (row) => (
                 <TableCell>
-                    <Link
-                        className=" text-primary-blue"
-                        to={`/blog-management/${row.id}?id=${row.id}`}
-                    >
+                    <Link to={`/blog-management/${row.id}`}>
                         {row.id}
                     </Link>
                 </TableCell>
@@ -69,14 +107,9 @@ export default function BlogTable({
             cell: (row) => <TableCell>{row.title}</TableCell>,
         },
         {
-            id: "author",
-            name: <TableHead>Author</TableHead>,
-            cell: (row) => <TableCell>{row.author}</TableCell>,
-        },
-        {
-            id: "category",
-            name: <TableHead>Category</TableHead>,
-            cell: (row) => <TableCell>{row.category}</TableCell>,
+            id: "content",
+            name: <TableHead>Content</TableHead>,
+            cell: (row) => <TableCell>{row.content}</TableCell>,
         },
         {
             id: "date",
@@ -84,32 +117,32 @@ export default function BlogTable({
             cell: (row) => <TableCell>{new Date(row.date).toLocaleDateString()}</TableCell>,
         },
         {
-            id: "link",
-            name: <TableHead>Link</TableHead>,
+            id: "imageUrl",
+            name: <TableHead>Image URL</TableHead>,
             cell: (row) => (
                 <TableCell>
-                    <a href={row.link} target="_blank" rel="noopener noreferrer">
-                        {row.link}
-                    </a>
+                    <img src={row.imageUrl} alt="Blog" style={{ maxWidth: "100px", maxHeight: "100px" }} />
                 </TableCell>
             ),
         },
         {
-            id: "imageUrl",
-            name: <TableHead>Image</TableHead>,
-            cell: (row) => (
-                <TableCell>
-                    <img src={row.imageUrl} alt="Blog" style={{ width: "50px" }} />
-                </TableCell>
-            ),
+            id: "createdAt",
+            name: <TableHead>Created At</TableHead>,
+            cell: (row) => <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>,
         },
         {
             id: "actions",
             name: <TableHead>Actions</TableHead>,
             cell: (row) => (
                 <TableCell>
-                    <Button text="Edit" onClick={() => openModal("edit", row)} />
-                    <Button text="Delete" onClick={() => handleDelete(row.id)} />
+                    <div className="space-x-4">
+                        <button onClick={() => openModal("edit", row)}>
+                            <Edit fontSize="small" />
+                        </button>
+                        <button onClick={() => openDeleteModal(row)}>
+                            <Delete fontSize="small" />
+                        </button>
+                    </div>
                 </TableCell>
             ),
         },
@@ -121,14 +154,15 @@ export default function BlogTable({
                 <Input
                     label={"Search"}
                     type={"text"}
-                    placeholder={"title/author/category"}
+                    placeholder={"Title/Author/Category"}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    onBlur={handleSearch}
                 />
             </div>
             <Table
                 columns={columns}
-                rows={data}
+                rows={filteredData}
                 page={page}
                 handleChangePage={handleChangePage}
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
@@ -142,99 +176,24 @@ export default function BlogTable({
                 footer={null}
             >
                 {modalAction === "edit" && (
-                    <EditBlogForm
+                    <BlogForm
                         blog={selectedRow}
-                        handleCancel={handleCancel}
-                        fetchBlogs={fetchBlogs} // Define fetchBlogs to refresh the blog list
+                        onSubmit={handleEdit}
+                        buttonText={"Submit"}
                     />
                 )}
+            </Modal>
+            <Modal
+                title="Confirm Delete"
+                visible={isDeleteModalOpen}
+                onCancel={() => setIsDeleteModalOpen(false)}
+                onOk={handleDelete}
+                okText="Delete"
+                cancelText="Cancel"
+                okType="danger"
+            >
+                <p>Are you sure you want to delete <span className="font-semibold">{selectedRow?.title}</span>?</p>
             </Modal>
         </div>
     );
 }
-
-const EditBlogForm = ({ blog, handleCancel, fetchBlogs }) => {
-    const [title, setTitle] = useState(blog.title);
-    const [content, setContent] = useState(blog.content);
-    const [author, setAuthor] = useState(blog.author);
-    const [category, setCategory] = useState(blog.category);
-    const [date, setDate] = useState(new Date(blog.date).toISOString().substr(0, 10));
-    const [link, setLink] = useState(blog.link);
-    const [imageUrl, setImageUrl] = useState(blog.imageUrl);
-
-    const handleSubmit = async () => {
-        const blogDetails = {
-            id: blog.id,
-            title,
-            content,
-            author,
-            category,
-            date,
-            link,
-            imageUrl,
-        };
-
-        try {
-            const response = await BlogServices.updateById(blog.id, blogDetails);
-            if (response.status === 200) {
-                message.success("Blog updated successfully");
-                handleCancel();
-                fetchBlogs();
-            } else {
-                message.error(response.data.message || "Failed to update blog");
-            }
-        } catch (error) {
-            message.error(error.message || "Failed to update blog");
-        }
-    };
-
-    return (
-        <div className="w-full">
-            <Input
-                label={"Title"}
-                placeholder={"Enter blog title"}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <Input
-                label={"Content"}
-                placeholder={"Enter blog content"}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            />
-            <Input
-                label={"Author"}
-                placeholder={"Enter author name"}
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-            />
-            <Input
-                label={"Category"}
-                placeholder={"Enter category"}
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-            />
-            <Input
-                label={"Date"}
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-            />
-            <Input
-                label={"Link"}
-                placeholder={"Enter blog link"}
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-            />
-            <Input
-                label={"Image URL"}
-                placeholder={"Enter image URL"}
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-            />
-            <div className="w-full flex justify-center items-center">
-                <Button text={"Submit"} onClick={handleSubmit} />
-            </div>
-        </div>
-    );
-};

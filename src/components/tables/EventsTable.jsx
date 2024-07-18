@@ -5,18 +5,18 @@ import Table from "../../components/reusable/Table/Table";
 import TableHead from "../../components/reusable/Table/TableHead";
 import TableCell from "../../components/reusable/Table/TableCell";
 import Input from "../../components/reusable/Input";
-import PodcastServices from "../../services/Podcast";
+import EventServices from "../../services/Event";
 import { Delete, Edit } from "@mui/icons-material";
-import PodcastForm from "../../components/forms/PodcastForm";
+import EventForm from "../../components/forms/EventsForm";
 
-export default function PodcastsTable({
+export default function EventsTable({
     page,
     handleChangePage,
     handleChangeRowsPerPage,
     rowsPerPage,
     rowCount,
     data: initialData,
-    fetchPodcasts
+    fetchEvents
 }) {
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,31 +47,31 @@ export default function PodcastsTable({
 
     const handleDelete = async () => {
         try {
-            const response = await PodcastServices.deleteById(selectedRow?.id);
+            const response = await EventServices.deleteById(selectedRow?.id);
             if (response.status === 204) {
-                message.success("Podcast deleted successfully");
-                fetchPodcasts();
+                message.success("Event deleted successfully");
+                fetchEvents();
                 setIsDeleteModalOpen(false);
             } else {
-                message.error(response.data.message || "Failed to delete podcast");
+                message.error(response.data.message || "Failed to delete event");
             }
         } catch (error) {
-            message.error(error.message || "Failed to delete podcast");
+            message.error(error.message || "Failed to delete event");
         }
     };
 
-    const handleEdit = async (podcastDetails) => {
+    const handleEdit = async (eventDetails) => {
         try {
-            const response = await PodcastServices.updateById(selectedRow.id, podcastDetails);
+            const response = await EventServices.updateById(selectedRow.id, eventDetails);
             if (response.status === 200) {
-                message.success("Podcast updated successfully");
+                message.success("Event updated successfully");
                 handleCancel();
-                fetchPodcasts();
+                fetchEvents();
             } else {
-                message.error(response.data.message || "Failed to update podcast");
+                message.error(response.data.message || "Failed to update event");
             }
         } catch (error) {
-            message.error(error.message || "Failed to update podcast");
+            message.error(error.message || "Failed to update event");
         }
     };
 
@@ -83,7 +83,7 @@ export default function PodcastsTable({
             const filtered = initialData.filter(item =>
                 item.title.toLowerCase().includes(lowercasedFilter) ||
                 item.description.toLowerCase().includes(lowercasedFilter) ||
-                item.url.toLowerCase().includes(lowercasedFilter)
+                item.date.toLowerCase().includes(lowercasedFilter)
             );
             setFilteredData(filtered);
         }
@@ -91,13 +91,13 @@ export default function PodcastsTable({
 
     const columns = [
         {
-            id: "podcastID",
-            name: <TableHead>Podcast ID</TableHead>,
+            id: "eventID",
+            name: <TableHead>Event ID</TableHead>,
             cell: (row) => (
                 <TableCell>
                     <Link
-                        className=" text-primary-blue"
-                        to={`/podcast-management/${row.id}?id=${row.id}`}
+                        className="text-primary-blue"
+                        to={`/event-management/${row.id}?id=${row.id}`}
                     >
                         {row.id}
                     </Link>
@@ -115,13 +115,20 @@ export default function PodcastsTable({
             cell: (row) => <TableCell>{row.description}</TableCell>,
         },
         {
-            id: "url",
-            name: <TableHead>URL</TableHead>,
+            id: "date",
+            name: <TableHead>Date</TableHead>,
+            cell: (row) => <TableCell>{row.date}</TableCell>,
+        },
+        {
+            id: "imageUrls",
+            name: <TableHead>Image URLs</TableHead>,
             cell: (row) => (
                 <TableCell>
-                    <a href={row.url} target="_blank" rel="noopener noreferrer">
-                        {row.url}
-                    </a>
+                    {row.imageUrls.map((url, index) => (
+                        <div key={index}>
+                            <img src={url} alt={`${index}`} style={{ maxWidth: "100px", maxHeight: "100px", marginRight: "5px" }} />
+                        </div>
+                    ))}
                 </TableCell>
             ),
         },
@@ -150,11 +157,11 @@ export default function PodcastsTable({
 
     return (
         <div className="w-full removeScrollBar pb-5">
-            <div className="flex flex-wrap lg:gap-8 gap-2 w-full justify-center lg:flex-nowrap lg:pl-2 lg:pr-10 lg:justify-start items-center mb-5 lg:mb-10 mt-2 lg:mt-6">
+            <div className="mb-5 lg:mb-10 mt-2">
                 <Input
                     label={"Search"}
                     type={"text"}
-                    placeholder={"title/description/url"}
+                    placeholder={"title/description/date"}
                     value={search}
                     onChange={(e) => { setSearch(e.target.value); handleSearch(e.target.value); }}
                 />
@@ -169,7 +176,7 @@ export default function PodcastsTable({
                 rowCount={rowCount || 0}
             />
             <Modal
-                title={modalAction === "edit" ? "Edit Podcast" : ""}
+                title={modalAction === "edit" ? "Edit Event" : ""}
                 visible={isModalOpen}
                 onCancel={handleCancel}
                 width={700}
@@ -177,8 +184,8 @@ export default function PodcastsTable({
                 footer={null}
             >
                 {modalAction === "edit" && (
-                    <PodcastForm
-                        podcast={selectedRow}
+                    <EventForm
+                        event={selectedRow}
                         onSubmit={handleEdit}
                         buttonText={"Submit"}
                     />
