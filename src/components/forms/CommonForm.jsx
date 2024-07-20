@@ -59,6 +59,13 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     onChange={handleInputChange(setFooter)}
                 />
                 <Input
+                    label={"Email"}
+                    placeholder={"Enter Email"}
+                    value={footer.email || ""}
+                    name="email"
+                    onChange={handleInputChange(setFooter)}
+                />
+                <Input
                     label={"Contact Number"}
                     placeholder={"Enter contact number"}
                     value={footer.contactNumber || ""}
@@ -85,6 +92,55 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     name="subheader"
                     onChange={handleInputChange(setLanding)}
                 />
+                <Input
+                    label={"Short Text"}
+                    placeholder={"Enter short text"}
+                    value={landing.shortText || ""}
+                    name="shortText"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 1"}
+                    placeholder={"Enter Stat 1"}
+                    value={landing.stat1 || ""}
+                    name="stat1"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 2"}
+                    placeholder={"Enter Stat 2"}
+                    value={landing.stat2 || ""}
+                    name="stat2"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 3"}
+                    placeholder={"Enter Stat 3"}
+                    value={landing.stat3 || ""}
+                    name="stat3"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 1 Content"}
+                    placeholder={"Enter Stat 1 Content"}
+                    value={landing.stat1content || ""}
+                    name="stat1content"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 2 Content"}
+                    placeholder={"Enter Stat 2 Content"}
+                    value={landing.stat2content || ""}
+                    name="stat2content"
+                    onChange={handleInputChange(setLanding)}
+                />
+                <Input
+                    label={"Stat 3 Content"}
+                    placeholder={"Enter Stat 3 Content"}
+                    value={landing.stat3content || ""}
+                    name="stat3content"
+                    onChange={handleInputChange(setLanding)}
+                />
                 {/* Add more inputs as needed */}
             </div>
 
@@ -103,6 +159,27 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     placeholder={"Enter Twitter URL"}
                     value={links.twitter || ""}
                     name="twitter"
+                    onChange={handleInputChange(setLinks)}
+                />
+                <Input
+                    label={"LinkedIn"}
+                    placeholder={"Enter LinkedIn URL"}
+                    value={links.linkedin || ""}
+                    name="linkedin"
+                    onChange={handleInputChange(setLinks)}
+                />
+                <Input
+                    label={"Instagram"}
+                    placeholder={"Enter Instagram URL"}
+                    value={links.instagram || ""}
+                    name="instagram"
+                    onChange={handleInputChange(setLinks)}
+                />
+                <Input
+                    label={"YouTube"}
+                    placeholder={"Enter YouTube URL"}
+                    value={links.youtube || ""}
+                    name="youtube"
                     onChange={handleInputChange(setLinks)}
                 />
                 {/* Add more inputs as needed */}
