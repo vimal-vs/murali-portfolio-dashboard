@@ -6,6 +6,7 @@ import arrow_left from "../../assets/navbar/arrow_left.svg";
 import logout from "../../assets/navbar/logout.svg";
 
 import { FaBlogger, FaCalendarAlt, FaMicrophone, FaQuoteLeft } from 'react-icons/fa';
+import { DashboardCustomize } from "@mui/icons-material";
 
 export default function Navbar({ isOpen, setIsOpen, handleLogout, children }) {
 
@@ -42,6 +43,13 @@ export default function Navbar({ isOpen, setIsOpen, handleLogout, children }) {
     `;
 
   const navContent = [
+    {
+      icon: <DashboardCustomize />,
+      alt: 'Data Management',
+      title: 'Data Management',
+      link: '/data',
+      activeLink: '/data'
+    },
     {
       icon: <FaBlogger />,
       alt: 'Blog Management',

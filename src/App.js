@@ -8,6 +8,7 @@ import Blogs from "./pages/Blogs";
 import Podcasts from "./pages/Podcasts";
 import Testimonials from "./pages/Testimonials";
 import Events from "./pages/Events";
+import Common from "./pages/Common";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="podcasts" element={<Podcasts />} />
           <Route path="testimonials" element={<Testimonials />} />
           <Route path="events" element={<Events />} />
+          <Route path="data" element={<Common />} />
         </Route>
 
         <Route path="/" element={<BlankLayout />}>
