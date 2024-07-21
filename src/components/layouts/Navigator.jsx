@@ -1,16 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function Navigator({
-    children,
-
-}) {
+export default function Navigator({ children }) {
     const path = useLocation().pathname;
     const p = path.substring(1);
     const pathArray = p.split('/');
-
-    // if (pathArray.length > 0) {
-    //     pathArray[0] = pathArray[0].charAt(0).toUpperCase() + pathArray[0].slice(1);
-    // };
 
     const navigate = useNavigate();
 
@@ -51,14 +44,10 @@ export default function Navigator({
                                         {first}
                                     </div>
                             }
-
                         </div>
                     );
                 })}
             </div>
-            {/* {
-    BreadcrumbsUrl()
-} */}
             <div className="h-[95vh]">
                 {children}
             </div>

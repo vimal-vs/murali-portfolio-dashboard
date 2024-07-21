@@ -42,7 +42,7 @@ export default function Common() {
     return (
         <>
             <PageLayout
-                title={"Common Management"}
+                title={"Data Management"}
                 description={"Manage the common details here"}
             >
                 <div className=" w-full  flex md:mt-7">

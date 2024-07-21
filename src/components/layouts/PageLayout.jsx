@@ -36,7 +36,7 @@ export default function PageLayout({
                         )}
                     </div>
                 </div>
-                <div>{children}</div>
+                <div className="h-full mt-3 overflow-y-scroll">{children}</div>
             </div>
         </Navigator>
     );

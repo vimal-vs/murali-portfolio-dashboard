@@ -5,14 +5,20 @@ import Button from '../reusable/Button';
 const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
     const [statistics, setStatistics] = useState(common?.statistics || {});
     const [footer, setFooter] = useState(common?.footer || {});
-    const [landing, setLanding] = useState(common?.landing || {});
+    const [landing, setLanding] = useState({
+        ...common?.landing,
+        header: common?.landing?.header?.join(', ') || '',
+    });
     const [links, setLinks] = useState(common?.links || {});
 
     useEffect(() => {
         if (common) {
             setStatistics(common.statistics || {});
             setFooter(common.footer || {});
-            setLanding(common.landing || {});
+            setLanding({
+                ...common.landing,
+                header: common.landing?.header?.join(', ') || '',
+            });
             setLinks(common.links || {});
         }
     }, [common]);
@@ -22,8 +28,17 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
         setter((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleLandingHeaderChange = (e) => {
+        const { value } = e.target;
+        setLanding((prev) => ({ ...prev, header: value }));
+    };
+
     const handleSubmit = () => {
-        onSubmit({ statistics, footer, landing, links }, setIsModalOpen);
+        const formattedLanding = {
+            ...landing,
+            header: landing.header.split(',').map(item => item.trim()),
+        };
+        onSubmit({ statistics, footer, landing: formattedLanding, links }, setIsModalOpen);
     };
 
     return (
@@ -45,7 +60,6 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     name="downloads"
                     onChange={handleInputChange(setStatistics)}
                 />
-                {/* Add more inputs as needed */}
             </div>
 
             {/* Footer Section */}
@@ -72,7 +86,6 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     name="contactNumber"
                     onChange={handleInputChange(setFooter)}
                 />
-                {/* Add more inputs as needed */}
             </div>
 
             {/* Landing Section */}
@@ -83,13 +96,13 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     placeholder={"Enter header text"}
                     value={landing.header || ""}
                     name="header"
-                    onChange={handleInputChange(setLanding)}
+                    onChange={handleLandingHeaderChange}
                 />
                 <Input
-                    label={"Subheader"}
-                    placeholder={"Enter subheader text"}
-                    value={landing.subheader || ""}
-                    name="subheader"
+                    label={"Sub Header"}
+                    placeholder={"Enter sub Header text"}
+                    value={landing.subHeader || ""}
+                    name="subHeader"
                     onChange={handleInputChange(setLanding)}
                 />
                 <Input
@@ -141,7 +154,6 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     name="stat3content"
                     onChange={handleInputChange(setLanding)}
                 />
-                {/* Add more inputs as needed */}
             </div>
 
             {/* Links Section */}
@@ -182,7 +194,6 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
                     name="youtube"
                     onChange={handleInputChange(setLinks)}
                 />
-                {/* Add more inputs as needed */}
             </div>
 
             <div className="w-full flex justify-center items-center mt-4">
