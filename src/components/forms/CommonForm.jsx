@@ -3,7 +3,7 @@ import Input from '../reusable/Input';
 import Button from '../reusable/Button';
 
 const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
-    const [statistics, setStatistics] = useState(common?.statistics || {});
+    const [downloads, setDownloads] = useState(common?.downloads || {});
     const [footer, setFooter] = useState(common?.footer || {});
     const [landing, setLanding] = useState({
         ...common?.landing,
@@ -13,7 +13,7 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
 
     useEffect(() => {
         if (common) {
-            setStatistics(common.statistics || {});
+            setDownloads(common.downloads || {});
             setFooter(common.footer || {});
             setLanding({
                 ...common.landing,
@@ -38,27 +38,34 @@ const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
             ...landing,
             header: landing.header.split(',').map(item => item.trim()),
         };
-        onSubmit({ statistics, footer, landing: formattedLanding, links }, setIsModalOpen);
+        onSubmit({ downloads, footer, landing: formattedLanding, links }, setIsModalOpen);
     };
 
     return (
         <div className="w-full flex flex-col gap-2 my-4">
-            {/* Statistics Section */}
-            <h2 className='font-semibold'>Statistics</h2>
+            {/* Downloads Section */}
+            <h2 className='font-semibold'>Downloads</h2>
             <div className="w-full grid grid-cols-3 gap-3">
                 <Input
-                    label={"Visits"}
-                    placeholder={"Enter number of visits"}
-                    value={statistics.visits || ""}
-                    name="visits"
-                    onChange={handleInputChange(setStatistics)}
+                    label={"Media Kit"}
+                    placeholder={"Link to media kit"}
+                    value={downloads.mediaKit || ""}
+                    name="mediaKit"
+                    onChange={handleInputChange(setDownloads)}
                 />
                 <Input
-                    label={"Downloads"}
-                    placeholder={"Enter number of downloads"}
-                    value={statistics.downloads || ""}
-                    name="downloads"
-                    onChange={handleInputChange(setStatistics)}
+                    label={"Guest Profile"}
+                    placeholder={"Link to guest link"}
+                    value={downloads.guestProfile || ""}
+                    name="guestProfile"
+                    onChange={handleInputChange(setDownloads)}
+                />
+                <Input
+                    label={"Brochure"}
+                    placeholder={"Link to Brochure"}
+                    value={downloads.brochure || ""}
+                    name="brochure"
+                    onChange={handleInputChange(setDownloads)}
                 />
             </div>
 
