@@ -51,7 +51,7 @@ export default function EventsTable({
     const handleDelete = async () => {
         try {
             const response = await EventServices.deleteById(selectedRow?.id);
-            if (response.status === 204) {
+            if (response.status === 200) {
                 message.success("Event deleted successfully");
                 fetchEvents();
                 setIsDeleteModalOpen(false);
@@ -184,8 +184,8 @@ export default function EventsTable({
             <Modal
                 title={modalAction === "edit" ? "Edit Event" : ""}
                 visible={isModalOpen}
-                onCancel={handleCancel}
                 width={700}
+                onCancel={handleCancel}
                 centered
                 footer={null}
             >

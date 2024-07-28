@@ -48,7 +48,7 @@ export default function PodcastsTable({
     const handleDelete = async () => {
         try {
             const response = await PodcastServices.deleteById(selectedRow?.id);
-            if (response.status === 204) {
+            if (response.status === 200) {
                 message.success("Podcast deleted successfully");
                 fetchPodcasts();
                 setIsDeleteModalOpen(false);

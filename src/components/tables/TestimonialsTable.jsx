@@ -47,7 +47,7 @@ export default function TestimonialsTable({
     const handleDelete = async () => {
         try {
             const response = await TestimonialServices.deleteById(selectedRow?.id);
-            if (response.status === 204) {
+            if (response.status === 200) {
                 message.success("Testimonial deleted successfully");
                 fetchTestimonials();
                 setIsDeleteModalOpen(false);
