@@ -1,5 +1,5 @@
 {
-  "name": "med_expert_admin_frontend",
+  "name": "muralidharan_dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,6 +15,7 @@
     "antd": "^5.12.4",
     "axios": "^1.6.7",
     "exceljs": "^4.4.0",
+    "html-react-parser": "^5.1.12",
     "js-cookie": "^3.0.5",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
@@ -23,6 +24,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-dropdown-select": "^4.11.2",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.21.0",
     "react-scripts": "5.0.1",
     "react-search-autocomplete": "^8.5.2",

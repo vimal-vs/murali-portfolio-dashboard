@@ -15,7 +15,7 @@ export default function TestimonialsTable({
     rowsPerPage,
     rowCount,
     data: initialData,
-    fetchTestimonials // Function to fetch testimonials
+    fetchTestimonials
 }) {
     const [search, setSearch] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,7 +136,7 @@ export default function TestimonialsTable({
 
     return (
         <div className="w-full removeScrollBar pb-5">
-            <div className="flex flex-wrap lg:gap-8 gap-2 w-full justify-center lg:flex-nowrap lg:pl-2 lg:pr-10 lg:justify-start items-center mb-5 lg:mb-10 mt-2 lg:mt-6">
+            <div className="mb-5 lg:mb-8 ml-2">
                 <Input
                     label={"Search"}
                     type={"text"}

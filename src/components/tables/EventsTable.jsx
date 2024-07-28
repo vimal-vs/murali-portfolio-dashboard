@@ -6,7 +6,7 @@ import TableHead from "../../components/reusable/Table/TableHead";
 import TableCell from "../../components/reusable/Table/TableCell";
 import Input from "../../components/reusable/Input";
 import EventServices from "../../services/Event";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Visibility } from "@mui/icons-material";
 import EventForm from "../../components/forms/EventsForm";
 
 export default function EventsTable({
@@ -24,6 +24,8 @@ export default function EventsTable({
     const [selectedRow, setSelectedRow] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [filteredData, setFilteredData] = useState([]);
+    const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+    const [previewImages, setPreviewImages] = useState([]);
 
     useEffect(() => {
         setFilteredData(initialData);
@@ -32,6 +34,7 @@ export default function EventsTable({
     const handleCancel = () => {
         setIsModalOpen(false);
         setIsDeleteModalOpen(false);
+        setIsPreviewModalOpen(false);
     };
 
     const openModal = (action, row) => {
@@ -89,6 +92,11 @@ export default function EventsTable({
         }
     };
 
+    const handlePreviewClick = (images) => {
+        setPreviewImages(images);
+        setIsPreviewModalOpen(true);
+    };
+
     const columns = [
         {
             id: "eventID",
@@ -120,22 +128,20 @@ export default function EventsTable({
             cell: (row) => <TableCell>{row.date}</TableCell>,
         },
         {
-            id: "imageUrls",
-            name: <TableHead>Image URLs</TableHead>,
-            cell: (row) => (
-                <TableCell>
-                    {row.imageUrls.map((url, index) => (
-                        <div key={index}>
-                            <img src={url} alt={`${index}`} style={{ maxWidth: "100px", maxHeight: "100px", marginRight: "5px" }} />
-                        </div>
-                    ))}
-                </TableCell>
-            ),
-        },
-        {
             id: "createdAt",
             name: <TableHead>Created At</TableHead>,
             cell: (row) => <TableCell>{new Date(row.createdAt).toLocaleDateString()}</TableCell>,
+        },
+        {
+            id: "imageUrls",
+            name: <TableHead>Images</TableHead>,
+            cell: (row) => (
+                <TableCell>
+                    <button onClick={() => handlePreviewClick(row.imageUrls)}>
+                        <Visibility fontSize="small" />
+                    </button>
+                </TableCell>
+            ),
         },
         {
             id: "actions",
@@ -157,7 +163,7 @@ export default function EventsTable({
 
     return (
         <div className="w-full removeScrollBar pb-5">
-            <div className="mb-5 lg:mb-10 mt-2">
+            <div className="mb-5 lg:mb-8 ml-2">
                 <Input
                     label={"Search"}
                     type={"text"}
@@ -201,6 +207,25 @@ export default function EventsTable({
                 okType="danger"
             >
                 <p>Are you sure you want to delete <span className="font-semibold">{selectedRow?.title}</span>?</p>
+            </Modal>
+            <Modal
+                title="Image Preview"
+                visible={isPreviewModalOpen}
+                onCancel={handleCancel}
+                width={800}
+                centered
+                footer={null}
+            >
+                <div className="grid grid-cols-2 gap-4">
+                    {previewImages.map((url, index) => (
+                        <img
+                            key={index}
+                            src={url}
+                            alt={`Preview ${index}`}
+                            className="w-full h-full object-contain"
+                        />
+                    ))}
+                </div>
             </Modal>
         </div>
     );

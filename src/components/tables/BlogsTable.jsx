@@ -8,6 +8,7 @@ import Input from "../reusable/Input";
 import BlogServices from "../../services/Blog";
 import BlogForm from "../forms/BlogsForm";
 import { Delete, Edit } from "@mui/icons-material";
+import parse from 'html-react-parser';
 
 export default function BlogsTable({
     page,
@@ -109,7 +110,10 @@ export default function BlogsTable({
         {
             id: "content",
             name: <TableHead>Content</TableHead>,
-            cell: (row) => <TableCell>{row.content}</TableCell>,
+            cell: (row) =>
+                <TableCell>
+                    {parse(row.content)}
+                </TableCell>,
         },
         {
             id: "date",
@@ -118,7 +122,7 @@ export default function BlogsTable({
         },
         {
             id: "imageUrl",
-            name: <TableHead>Image URL</TableHead>,
+            name: <TableHead>Image</TableHead>,
             cell: (row) => (
                 <TableCell>
                     <img src={row.imageUrl} alt="Blog" style={{ maxWidth: "100px", maxHeight: "100px" }} />
@@ -150,7 +154,7 @@ export default function BlogsTable({
 
     return (
         <div className="w-full removeScrollBar pb-5">
-            <div className="flex flex-wrap lg:gap-8 gap-2 w-full justify-center lg:flex-nowrap lg:pl-2 lg:pr-10 lg:justify-start items-center mb-5 lg:mb-10 mt-2 lg:mt-6">
+            <div className="mb-5 lg:mb-8 ml-2">
                 <Input
                     label={"Search"}
                     type={"text"}

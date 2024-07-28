@@ -41,16 +41,6 @@ body {
   scrollbar-width: none;
 }
 
-#tabs>.ant-tabs-content-holder {
-  height: calc(100vh - 257px);
-  overflow: scroll;
-}
-
-.ant-tabs-content-holder {
-  height: calc(100vh - 207px);
-  overflow: scroll;
-}
-
 .ant-message-custom-content>span {
   font-size: 12px;
 }
@@ -83,13 +73,52 @@ body {
   width: 250px !important;
 }
 
-@media screen and (max-width: 540px) {
-  #tabs>.ant-tabs-content-holder {
-    height: calc(100vh - 280px);
-    overflow: scroll;
-  }
-}
-
 .ant-tooltip-inner {
   font-size: 10 px !important;
+}
+
+.file-input {
+  display: block;
+  border-radius: 8px;
+  height: 40px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.file-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.file-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.file-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.file-action-icon {
+  cursor: pointer;
+}
+
+.delete-icon {
+  color: red;
+}
+
+.preview-icon {
+  color: blue;
 }

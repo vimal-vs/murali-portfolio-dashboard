@@ -80,7 +80,7 @@ export default function Login() {
           error={errors.password}
         />
         <div className="w-full mt-2">
-          <Button type={"submit"} loading={loading} text="Sign in" />
+          <Button bgColor={"#8280F2"} type={"submit"} loading={loading} text="Sign in" />
         </div>
       </form>
     </LoginLayout>
