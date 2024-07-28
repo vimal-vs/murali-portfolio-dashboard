@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../reusable/Input';
 import Button from '../reusable/Button';
 import DateInput from '../reusable/DateInput';
@@ -7,14 +7,22 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const BlogForm = ({ blog, onSubmit, buttonText }) => {
-    const [title, setTitle] = useState(blog?.title || "");
-    const [content, setContent] = useState(blog?.content || "");
-    const [date, setDate] = useState(blog?.date || "");
-    const [imageUrl, setImageUrl] = useState(blog?.imageUrl || "");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [date, setDate] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
 
     const [titleValidation, setTitleValidation] = useState("");
     const [contentValidation, setContentValidation] = useState("");
     const [dateValidation, setDateValidation] = useState("");
+
+    useEffect(() => {
+        setTitle(blog?.title || "");
+        setContent(blog?.content || "");
+        setDate(blog?.date || "");
+        setImageUrl(blog?.imageUrl || "");
+    }, [blog]);
+
 
     const validateFields = () => {
         let isValid = true;

@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../reusable/Input';
 import Button from '../reusable/Button';
 
 const TestimonialForm = ({ testimonial, onSubmit, buttonText }) => {
-    const [content, setContent] = useState(testimonial?.content || "");
-    const [name, setName] = useState(testimonial?.name || "");
-    const [designation, setDesignation] = useState(testimonial?.designation || "");
+    const [content, setContent] = useState("");
+    const [name, setName] = useState("");
+    const [designation, setDesignation] = useState("");
 
     const [contentValidation, setContentValidation] = useState("");
     const [nameValidation, setNameValidation] = useState("");
     const [designationValidation, setDesignationValidation] = useState("");
+
+    useEffect(() => {
+        setContent(testimonial?.content || "");
+        setName(testimonial?.name || "");
+        setDesignation(testimonial?.designation || "");
+    }, [testimonial]);
 
     const validateFields = () => {
         let isValid = true;

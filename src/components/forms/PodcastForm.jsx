@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../reusable/Input';
 import Button from '../reusable/Button';
 
 const PodcastForm = ({ podcast, onSubmit, buttonText }) => {
-    const [title, setTitle] = useState(podcast?.title || "");
-    const [description, setDescription] = useState(podcast?.description || "");
-    const [url, setUrl] = useState(podcast?.url || "");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [url, setUrl] = useState("");
 
     const [titleValidation, setTitleValidation] = useState("");
     const [descriptionValidation, setDescriptionValidation] = useState("");
     const [urlValidation, setUrlValidation] = useState("");
+
+    useEffect(() => {
+        setTitle(podcast?.title || "");
+        setDescription(podcast?.description || "");
+        setUrl(podcast?.url || "");
+    }, [podcast]);
+
 
     const validateFields = () => {
         let isValid = true;

@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../reusable/Input';
 import DateInput from '../reusable/DateInput';
 import Button from '../reusable/Button';
 import Upload from '../reusable/Upload';
 
 const EventForm = ({ event, onSubmit, buttonText }) => {
-    const [title, setTitle] = useState(event?.title || "");
-    const [description, setDescription] = useState(event?.description || "");
-    const [date, setDate] = useState(event?.date || "");
-    const [imageUrls, setImageUrls] = useState(event?.imageUrls || []);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [date, setDate] = useState("");
+    const [imageUrls, setImageUrls] = useState([]);
 
     const [titleValidation, setTitleValidation] = useState("");
     const [descriptionValidation, setDescriptionValidation] = useState("");
     const [dateValidation, setDateValidation] = useState("");
+
+    useEffect(() => {
+        setTitle(event?.title || "");
+        setDescription(event?.description || "");
+        setDate(event?.date || "");
+        setImageUrls(event?.imageUrls || []);
+    }, [event]);
 
     const validateFields = () => {
         let isValid = true;

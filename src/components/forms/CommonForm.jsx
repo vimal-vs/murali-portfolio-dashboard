@@ -6,6 +6,7 @@ import Button from '../reusable/Button';
 const { TabPane } = Tabs;
 
 const CommonForm = ({ common, onSubmit, buttonText, setIsModalOpen }) => {
+
     const [downloads, setDownloads] = useState(common?.downloads || {});
     const [footer, setFooter] = useState(common?.footer || {});
     const [landing, setLanding] = useState({
