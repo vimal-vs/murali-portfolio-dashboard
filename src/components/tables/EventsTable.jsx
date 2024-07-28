@@ -209,20 +209,20 @@ export default function EventsTable({
                 <p>Are you sure you want to delete <span className="font-semibold">{selectedRow?.title}</span>?</p>
             </Modal>
             <Modal
-                title="Image Preview"
+                title="Preview of Images"
                 visible={isPreviewModalOpen}
                 onCancel={handleCancel}
-                width={800}
+                width={600}
                 centered
                 footer={null}
             >
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 justify-between mt-2">
                     {previewImages.map((url, index) => (
                         <img
                             key={index}
                             src={url}
                             alt={`Preview ${index}`}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain max-w-[200px] shadow-md"
                         />
                     ))}
                 </div>
