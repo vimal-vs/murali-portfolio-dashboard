@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Input from '../reusable/Input';
 import Button from '../reusable/Button';
+import TextArea from '../reusable/TextArea';
 
 const TestimonialForm = ({ testimonial, onSubmit, buttonText }) => {
     const [content, setContent] = useState("");
@@ -43,31 +44,35 @@ const TestimonialForm = ({ testimonial, onSubmit, buttonText }) => {
     };
 
     return (
-        <div className="w-full flex flex-wrap gap-6 my-4">
-            <Input
+        <div className="w-full flex flex-col gap-6 my-4">
+            <TextArea
                 label={"Content"}
                 placeholder={"Enter testimonial content"}
                 value={content}
                 error={contentValidation !== "" ? contentValidation : ""}
                 onChange={(e) => setContent(e.target.value)}
                 mandate={true}
+                charLimit={300}
+                width={"100%"}
             />
-            <Input
-                label={"Name"}
-                placeholder={"Enter testimonial name"}
-                value={name}
-                error={nameValidation !== "" ? nameValidation : ""}
-                onChange={(e) => setName(e.target.value)}
-                mandate={true}
-            />
-            <Input
-                label={"Designation"}
-                placeholder={"Enter testimonial designation"}
-                value={designation}
-                error={designationValidation !== "" ? designationValidation : ""}
-                onChange={(e) => setDesignation(e.target.value)}
-                mandate={true}
-            />
+            <div className='flex flex-wrap justify-between'>
+                <Input
+                    label={"Name"}
+                    placeholder={"Enter testimonial name"}
+                    value={name}
+                    error={nameValidation !== "" ? nameValidation : ""}
+                    onChange={(e) => setName(e.target.value)}
+                    mandate={true}
+                />
+                <Input
+                    label={"Designation"}
+                    placeholder={"Enter testimonial designation"}
+                    value={designation}
+                    error={designationValidation !== "" ? designationValidation : ""}
+                    onChange={(e) => setDesignation(e.target.value)}
+                    mandate={true}
+                />
+            </div>
             <div className="w-full flex justify-center items-center mt-4">
                 <Button text={buttonText} onClick={validateFields} width={"100px"} />
             </div>

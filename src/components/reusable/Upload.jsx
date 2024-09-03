@@ -30,6 +30,9 @@ const Upload = ({ label, mandate, isMultiple, filesUrl, setFilesUrl }) => {
                 setFilesUrl(response.data?.files[0]);
             }
             setStatus(STATUS_IDLE);
+        } else {
+            message.success("Upload failed");
+            setStatus(STATUS_IDLE);
         }
     };
 
@@ -77,7 +80,7 @@ const Upload = ({ label, mandate, isMultiple, filesUrl, setFilesUrl }) => {
     };
 
     const renderFileList = () => (
-        <ol className="file-list">
+        <ol className="file-list grid grid-rows-2">
             {files.map((file, index) => (
                 <li key={index} className="file-item">
                     <div className="file-info">
