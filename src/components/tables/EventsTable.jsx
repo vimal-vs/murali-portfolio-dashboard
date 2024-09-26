@@ -114,13 +114,13 @@ export default function EventsTable({
         },
         {
             id: "title",
-            name: <TableHead>Title</TableHead>,
-            cell: (row) => <TableCell>{row.title}</TableCell>,
+            name: <TableHead width="200px">Title</TableHead>,
+            cell: (row) => <TableCell width="200px" l>{row.title}</TableCell>,
         },
         {
             id: "description",
-            name: <TableHead>Description</TableHead>,
-            cell: (row) => <TableCell>{row.description}</TableCell>,
+            name: <TableHead width="300px">Description</TableHead>,
+            cell: (row) => <TableCell width="300px">{row.description}</TableCell>,
         },
         {
             id: "date",
@@ -152,9 +152,11 @@ export default function EventsTable({
                         <button onClick={() => openModal("edit", row)}>
                             <Edit fontSize="small" />
                         </button>
-                        <button onClick={() => openDeleteModal(row)}>
-                            <Delete fontSize="small" />
-                        </button>
+                        {(row.id !== 0 && row.id !== 1) &&
+                            <button onClick={() => openDeleteModal(row)}>
+                                <Delete fontSize="small" />
+                            </button>
+                        }
                     </div>
                 </TableCell>
             ),
@@ -188,6 +190,7 @@ export default function EventsTable({
                 onCancel={handleCancel}
                 centered
                 footer={null}
+                className="my-12"
             >
                 {modalAction === "edit" && (
                     <EventForm
@@ -215,6 +218,7 @@ export default function EventsTable({
                 width={600}
                 centered
                 footer={null}
+                className="my-12"
             >
                 <div className="grid grid-cols-2 justify-between mt-2">
                     {previewImages.map((url, index) => (

@@ -111,8 +111,8 @@ export default function PodcastsTable({
         },
         {
             id: "description",
-            name: <TableHead>Description</TableHead>,
-            cell: (row) => <TableCell>{row.description}</TableCell>,
+            name: <TableHead width="300px">Description</TableHead>,
+            cell: (row) => <TableCell width="300px">{row.description}</TableCell>,
         },
         {
             id: "url",

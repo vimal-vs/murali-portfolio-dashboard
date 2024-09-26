@@ -109,9 +109,9 @@ export default function BlogsTable({
         },
         {
             id: "content",
-            name: <TableHead>Content</TableHead>,
+            name: <TableHead width="300px">Content</TableHead>,
             cell: (row) =>
-                <TableCell>
+                <TableCell width="300px">
                     {parse(row.content)}
                 </TableCell>,
         },

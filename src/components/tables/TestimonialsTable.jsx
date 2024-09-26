@@ -98,8 +98,8 @@ export default function TestimonialsTable({
         },
         {
             id: "content",
-            name: <TableHead>Content</TableHead>,
-            cell: (row) => <TableCell>{row.content}</TableCell>,
+            name: <TableHead width="300px">Content</TableHead>,
+            cell: (row) => <TableCell width="300px">{row.content}</TableCell>,
         },
         {
             id: "name",
@@ -108,8 +108,8 @@ export default function TestimonialsTable({
         },
         {
             id: "designation",
-            name: <TableHead>Designation</TableHead>,
-            cell: (row) => <TableCell>{row.designation}</TableCell>,
+            name: <TableHead width="200px">Designation</TableHead>,
+            cell: (row) => <TableCell width="200px">{row.designation}</TableCell>,
         },
         {
             id: "createdAt",
